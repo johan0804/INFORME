@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital del Amor a Distancia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #FFB6D9;
+            --secondary: #FFE0EB;
+            --accent: #FF69B4;
+            --dark: #2D1B2E;
+            --light: #FFF9FC;
+            --glow: #FF1493;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--light) 0%, #FFF0F7 100%);
+            color: var(--dark);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* PARTICULAS DE FONDO */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle, var(--primary), transparent);
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0.5; }
+            50% { transform: translateY(-100px) translateX(50px); opacity: 0.8; }
+        }
+
+        /* CONTENEDOR PRINCIPAL */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* LOADER */
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--light) 0%, #FFF0F7 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeOut 0.8s ease-out 2s forwards;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        .loader {
+            text-align: center;
+        }
+
+        .heart-loader {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            animation: heartBeat 0.8s ease-in-out infinite;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        .loader p {
+            color: var(--accent);
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        /* SECCIÓN INICIO */
+        .hero {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: slideInDown 0.8s ease-out;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(255, 20, 147, 0.3);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 20, 147, 0.4)); }
+            50% { filter: drop-shadow(0 0 40px rgba(255, 20, 147, 0.7)); }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--accent);
+            margin-bottom: 40px;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .chansey-icon {
+            font-size: 150px;
+            margin: 30px 0;
+            animation: float 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 182, 217, 0.8));
+        }
+
+        .btn-start {
+            background: linear-gradient(135deg, var(--accent), var(--glow));
+            color: white;
+            border: none;
+            padding: 18px 45px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 30px rgba(255, 20, 147, 0.4);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .btn-start:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(255, 20, 147, 0.6);
+            letter-spacing: 2px;
+        }
+
+        /* TARJETAS PRINCIPALES */
+        .card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 182, 217, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(255, 20, 147, 0.15);
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card h2 {
+            color: var(--accent);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 15px;
+        }
+
+        .card h3 {
+            color: var(--dark);
+            font-size: 1.2rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: var(--dark);
+            line-height: 1.8;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        /* INFORMACIÓN MÉDICA */
+        .medical-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .info-item {
+            background: linear-gradient(135deg, rgba(255, 182, 217, 0.2), rgba(255, 224, 235, 0.3));
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .info-item strong {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .info-item span {
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+
+        /* LÍNEA ECG */
+        .ecg-container {
+            margin: 30px 0;
+            overflow: hidden;
+            height: 100px;
+            border-radius: 10px;
+            background: linear-gradient(to right, rgba(255, 20, 147, 0.05), rgba(255, 182, 217, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* BARRAS MÉDICAS */
+        .health-bar {
+            margin: 20px 0;
+        }
+
+        .bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .bar-container {
+            background: rgba(255, 182, 217, 0.2);
+            height: 12px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 20, 147, 0.5);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 15px rgba(255, 20, 147, 0.5); }
+            50% { box-shadow: 0 0 30px rgba(255, 20, 147, 0.8); }
+        }
+
+        /* EFECTO ESCRITURA */
+        .typing-text {
+            min-height: 60px;
+            color: var(--accent);
+            font-style: italic;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .typing-text::after {
+            content: '|';
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        /* CONTADOR */
+        .counter-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .counter-item {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(255, 20, 147, 0.25);
+        }
+
+        .counter-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 2px 10px rgba(45, 27, 46, 0.3);
+        }
+
+        .counter-label {
+            color: white;
+            font-size: 0.9rem;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, var(--light) 0%, #FFF0F7 100%);
+            margin: 10% auto;
+            padding: 50px;
+            border: 2px solid var(--primary);
+            border-radius: 25px;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(255, 20, 147, 0.3);
+            animation: slideInDown 0.5s ease-out;
+        }
+
+        .modal-content h2 {
+            color: var(--accent);
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .modal-message {
+            font-size: 1.3rem;
+            color: var(--dark);
+            font-weight: 500;
+            line-height: 1.8;
+            margin: 30px 0;
+            min-height: 80px;
+        }
+
+        .close-modal {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            margin-top: 20px;
+            box-shadow: 0 8px 25px rgba(255, 20, 147, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(255, 20, 147, 0.5);
+        }
+
+        /* LLUVIA DE CORAZONES */
+        .heart-rain {
+            position: fixed;
+            pointer-events: none;
+            z-index: 5000;
+        }
+
+        .heart-rain span {
+            position: absolute;
+            display: block;
+            font-size: 30px;
+            animation: heartFall 3s ease-in forwards;
+            opacity: 0.8;
+        }
+
+        @keyframes heartFall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* BOTONES DE ACCIÓN */
+        .btn-action {
+            background: linear-gradient(135deg, var(--accent), var(--glow));
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            box-shadow: 0 8px 25px rgba(255, 20, 147, 0.3);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 10px;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 20, 147, 0.5);
+        }
+
+        /* FIRMA */
+        .signature {
+            text-align: center;
+            margin-top: 60px;
+            padding: 40px;
+            border-top: 3px dashed var(--primary);
+            border-bottom: 3px dashed var(--primary);
+        }
+
+        .signature-name {
+            font-size: 2rem;
+            font-style: italic;
+            color: var(--accent);
+            margin: 20px 0;
+            animation: slideInRight 0.6s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .signature-title {
+            color: var(--dark);
+            font-weight: 600;
+            margin: 10px 0;
+        }
+
+        .seal {
+            font-size: 60px;
+            margin-top: 20px;
+            animation: rotate 3s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .chansey-icon {
+                font-size: 100px;
+            }
+
+            .medical-info {
+                grid-template-columns: 1fr;
+            }
+
+            .counter-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .card {
+                padding: 25px;
+            }
+
+            .modal-content {
+                margin: 30% auto;
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .chansey-icon {
+                font-size: 80px;
+            }
+
+            .counter-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .card h2 {
+                font-size: 1.3rem;
+            }
+
+            .btn-start {
+                padding: 15px 30px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- LOADER -->
+    <div class="loader-container">
+        <div class="loader">
+            <div class="heart-loader">💖</div>
+            <p>Cargando tu experiencia especial...</p>
+        </div>
+    </div>
+
+    <!-- PARTÍCULAS -->
+    <div class="particles" id="particles"></div>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div class="container">
+        <!-- SECCIÓN HÉROE -->
+        <section class="hero">
+            <h1>HOSPITAL DEL AMOR A DISTANCIA</h1>
+            <p>Servicio de Relaciones Especiales 💕</p>
+            <div class="chansey-icon">🎀</div>
+            <button class="btn-start" onclick="scrollToSection('medical')">Iniciar valoración médica</button>
+        </section>
+
+        <!-- INFORME MÉDICO -->
+        <section class="card" id="medical">
+            <h2>📋 PARTE MÉDICO DE VALORACIÓN</h2>
+            
+            <div class="info-item">
+                <strong>👩‍⚕️ Paciente:</strong>
+                <span id="patient-name">Mi morena Hermosa</span>
+            </div>
+
+            <div class="info-item">
+                <strong>📊 Nº Historia:</strong>
+                <span>3MESES</span>
+            </div>
+
+            <div class="info-item">
+                <strong>📅 Fecha Ingreso:</strong>
+                <span>2 de marzo del 2026</span>
+            </div>
+
+            <div class="info-item">
+                <strong>⏰ Fecha Actual:</strong>
+                <span id="current-date"></span>
+            </div>
+
+            <h3>Motivo de consulta:</h3>
+            <p class="typing-text" id="typing-text"></p>
+        </section>
+
+        <!-- EXPLORACIÓN MÉDICA -->
+        <section class="card">
+            <h2>🩻 EXPLORACIÓN MÉDICA AVANZADA</h2>
+
+            <div class="ecg-container">
+                <svg viewBox="0 0 1000 200" preserveAspectRatio="xMidYMid meet">
+                    <polyline points="0,100 50,100 75,50 100,150 150,100 200,100 250,100 300,100 350,60 400,140 450,100 500,100 550,100 600,100 650,80 700,120 750,100 800,100 850,100 900,100 950,100 1000,100"
+                        fill="none" stroke="url(#gradientECG)" stroke-width="3" vector-effect="non-scaling-stroke" />
+                    <defs>
+                        <linearGradient id="gradientECG" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#FFB6D9;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#FF1493;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#FFB6D9;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+
+            <div class="medical-info">
+                <div class="info-item">
+                    <strong>❤️ Frecuencia cardíaca:</strong>
+                    <span>Aumenta cada vez que escucha su voz</span>
+                </div>
+                <div class="info-item">
+                    <strong>🩸 Presión arterial:</strong>
+                    <span>Estable pero emocional</span>
+                </div>
+                <div class="info-item">
+                    <strong>👁️ Pupilas:</strong>
+                    <span>Dilatadas al observar fotos juntos</span>
+                </div>
+                <div class="info-item">
+                    <strong>😊 Estado emocional:</strong>
+                    <span>Completamente enamorado</span>
+                </div>
+                <div class="info-item">
+                    <strong>🥰 Nivel de ternura:</strong>
+                    <span>Peligrosamente adorable</span>
+                </div>
+                <div class="info-item">
+                    <strong>💪 Estabilidad emocional:</strong>
+                    <span>Comprometido al 100%</span>
+                </div>
+            </div>
+
+            <!-- BARRAS DE SALUD -->
+            <h3>Vital Signs Monitor:</h3>
+
+            <div class="health-bar">
+                <div class="bar-label">
+                    <span>Felicidad</span>
+                    <span>98%</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width: 98%; animation-delay: 0s;"></div>
+                </div>
+            </div>
+
+            <div class="health-bar">
+                <div class="bar-label">
+                    <span>Apego emocional</span>
+                    <span>95%</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width: 95%; animation-delay: 0.2s;"></div>
+                </div>
+            </div>
+
+            <div class="health-bar">
+                <div class="bar-label">
+                    <span>Ganas de verte</span>
+                    <span>100%</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width: 100%; animation-delay: 0.4s;"></div>
+                </div>
+            </div>
+
+            <div class="health-bar">
+                <div class="bar-label">
+                    <span>Enamoramiento</span>
+                    <span>1000%</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width: 100%; animation-delay: 0.6s;"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRUEBAS COMPLEMENTARIAS -->
+        <section class="card">
+            <h2>🧪 PRUEBAS COMPLEMENTARIAS AVANZADAS</h2>
+            <p>Se realizó cartografía emocional de última generación mediante escaneo holográfico del corazón. Los hallazgos indican un punto exacto donde el tiempo y la distancia colapsan en un espacio infinito de amor.</p>
+            
+            <h3>Coordenadas románticas detectadas:</h3>
+            <div class="info-item">
+                <strong>Ubicación Geográfica del Amor:</strong>
+                <span>Dentro de tu pecho, ocupando cada espacio disponible 📍</span>
+            </div>
+
+            <div class="info-item">
+                <strong>Intensidad de la señal:</strong>
+                <span>Omnipresente en distancia de 999.9 km 📡</span>
+            </div>
+
+            <div class="info-item">
+                <strong>Compatibilidad de frecuencias:</strong>
+                <span>Perfectamente sincronizadas 🔗</span>
+            </div>
+        </section>
+
+        <!-- DIAGNÓSTICO -->
+        <section class="card" style="background: linear-gradient(135deg, rgba(255, 20, 147, 0.1), rgba(255, 182, 217, 0.15)); border: 2px solid var(--accent);">
+            <h2>💖 DIAGNÓSTICO DEFINITIVO</h2>
+            <p style="font-size: 1.3rem; color: var(--accent); text-align: center; line-height: 2; font-weight: 600;">
+                "Amor a distancia grado 3 meses<br>
+                Con signos severos de felicidad aguda<br>
+                Y dependencia emocional mutua garantizada"
+            </p>
+        </section>
+
+        <!-- TRATAMIENTO -->
+        <section class="card">
+            <h2>💊 TRATAMIENTO PRESCRITO</h2>
+            <p style="margin-bottom: 20px; font-weight: 600; color: var(--dark);">Se prescribe el siguiente régimen terapéutico:</p>
+
+            <div class="info-item" style="margin-bottom: 12px;">
+                <strong>📞 Videollamadas diarias</strong>
+                <span>Dosis: Sin límite. Horario: Flexible según disponibilidad</span>
+            </div>
+
+            <div class="info-item" style="margin-bottom: 12px;">
+                <strong>💬 Dosis mínimas de "Te amo"</strong>
+                <span>Mínimo 3 veces al día. Máximo: Lo que sea necesario</span>
+            </div>
+
+            <div class="info-item" style="margin-bottom: 12px;">
+                <strong>🤗 Abrazos imaginarios antes de dormir</strong>
+                <span>Aplicación: Cada noche. Efecto: Sueños hermosos garantizados</span>
+            </div>
+
+            <div class="info-item" style="margin-bottom: 12px;">
+                <strong>💋 Terapia intensiva de besos pendientes</strong>
+                <span>Aplicación urgente: Próximo encuentro. Dosis: Infinita</span>
+            </div>
+
+            <div class="info-item" style="margin-bottom: 12px;">
+                <strong>📅 Revisión médica urgente cuando vuelvan a verse</strong>
+                <span>Duración: Todo el tiempo que sea posible. Seguimiento: Cada segundo</span>
+            </div>
+
+            <p style="margin-top: 20px; color: var(--accent); font-weight: 600; font-style: italic;">⚠️ Advertencias: Efectos secundarios incluyen sonrisas involuntarias, mariposas en el estómago y necesidad constante de estar juntos.</p>
+        </section>
+
+        <!-- SECCIÓN EMOCIONAL -->
+        <section class="card">
+            <h2>💗 PALABRAS ESPECIALES PARA TI</h2>
+            <div style="margin-top: 30px; text-align: center;">
+                <p class="typing-text" id="emotional-text"></p>
+            </div>
+        </section>
+
+        <!-- CONTADOR DE TIEMPO -->
+        <section class="card">
+            <h2>⏳ TIEMPO JUNTOS</h2>
+            <p style="text-align: center; margin-bottom: 30px;">Desde el 2 de marzo del 2026:</p>
+            
+            <div class="counter-container">
+                <div class="counter-item">
+                    <div class="counter-number" id="days">0</div>
+                    <div class="counter-label">Días</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-number" id="hours">0</div>
+                    <div class="counter-label">Horas</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-number" id="minutes">0</div>
+                    <div class="counter-label">Minutos</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-number" id="seconds">0</div>
+                    <div class="counter-label">Segundos</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ESCANEO ESPECIAL DE CHANSEY -->
+        <section class="card" style="text-align: center;">
+            <h2>🩷 ESCANEO ESPECIAL DE CHANSEY</h2>
+            <p>Chansey está lista para escanear tu corazón romántico. Al presionar el botón se activará un análisis emocional profundo.</p>
+            <button class="btn-action" onclick="scanHeart()">🎀 Escanear corazón</button>
+        </section>
+
+        <!-- ESTADO ACTUAL DEL CORAZÓN -->
+        <section class="card">
+            <h2>📈 ESTADO ACTUAL DEL CORAZÓN</h2>
+
+            <div class="health-bar">
+                <div class="bar-label">
+                    <span>💝 Felicidad compartida</span>
+                    <span>99%</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width: 99%;"></div>
+                </div>
+            </div>
+
+            <div class="health-bar">
+                <div class="bar-label">
+                    <span>🔗 Conexión emocional</span>
+                    <span>100%</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width: 100%;"></div>
+                </div>
+            </div>
+
+            <div class="health-bar">
+                <div class="bar-label">
+                    <span>🎯 Ganas de verte pronto</span>
+                    <span>∞</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width: 100%;"></div>
+                </div>
+            </div>
+
+            <div class="health-bar">
+                <div class="bar-label">
+                    <span>🌟 Admiración profunda</span>
+                    <span>Inmensurable</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width: 100%;"></div>
+                </div>
+            </div>
+
+            <div class="health-bar">
+                <div class="bar-label">
+                    <span>💞 Compromiso de amor</span>
+                    <span>Para siempre</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width: 100%;"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRONÓSTICO FINAL -->
+        <section class="card" style="background: linear-gradient(135deg, rgba(255, 182, 217, 0.3), rgba(255, 20, 147, 0.15)); border: 3px solid var(--accent);">
+            <h2>🔮 PRONÓSTICO FINAL</h2>
+            <p style="font-size: 1.2rem; color: var(--accent); text-align: center; margin: 30px 0; font-weight: 600; line-height: 1.8;">
+                El tratamiento prescrito presenta una tasa de éxito del 100% mientras exista amor mutuo.
+            </p>
+            <p style="font-size: 1.2rem; color: var(--dark); text-align: center; font-weight: 700; line-height: 1.8;">
+                ✨ Pronóstico reservado para toda la vida ✨
+            </p>
+        </section>
+
+        <!-- FIRMA FINAL -->
+        <section class="signature">
+            <h3 style="color: var(--dark); margin-bottom: 20px;">Atentamente,</h3>
+            <div class="signature-name">Dr.Johan 💌</div>
+            <p class="signature-title">Especialista en quererla a distancia y amarla eternamente</p>
+            <p class="signature-title">Colegiado nº 💖</p>
+            <div class="seal">🩷</div>
+        </section>
+    </div>
+
+    <!-- MODAL ROMÁNTICO -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h2>💝 Acceso Autorizado 💝</h2>
+            <div class="modal-message" id="modal-message"></div>
+            <button class="close-modal" onclick="closeModal()">Cerrar escaneo</button>
+        </div>
+    </div>
+
+    <script>
+        // MENSAJES ALEATORIOS PARA MODAL
+        const randomMessages = [
+            "Acceso autorizado al corazón del doctor. 🔓",
+            "Paciente diagnosticada con exceso de belleza. 😍",
+            "Compatibilidad amorosa detectada: 100%. 💕",
+            "Chansey recomienda sobredosis de abrazos. 🤗",
+            "Tu sonrisa es medicina para mi alma. ✨",
+            "Te amo infinitamente más cada día. 💖",
+            "Eres mi razón favorita para sonreír. 😊",
+            "3 meses y muchos más por venir. 📅💕",
+        ];
+
+        // INICIALIZAR PARTÍCULAS
+        function initParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // EFECTO TYPING
+        function typeText(element, text, speed = 50) {
+            return new Promise((resolve) => {
+                element.textContent = '';
+                let index = 0;
+                const interval = setInterval(() => {
+                    element.textContent += text.charAt(index);
+                    index++;
+                    if (index > text.length) {
+                        clearInterval(interval);
+                        resolve();
+                    }
+                }, speed);
+            });
+        }
+
+        // ACTUALIZAR FECHA ACTUAL
+        function updateCurrentDate() {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const today = new Date();
+            document.getElementById('current-date').textContent = today.toLocaleDateString('es-ES', options);
+        }
+
+        // TEXTO DE CONSULTA MÉDICA
+        const consultText = "La paciente refiere extrañar demasiado a su pareja, con episodios frecuentes de sonrisas espontáneas al recibir mensajes y necesidad constante de abrazos virtuales. También presenta síntomas de curiosidad por conocer qué sorpresa especial se prepara para celebrar estos 3 meses de amor puro.";
+
+        // FRASES EMOTIVAS PARA ESCRITURA
+        const emotionalPhrases = [
+            "Gracias por estos 3 meses increíbles contigo",
+            "Te amo muchísimo, más de lo que las palabras pueden expresar",
+            "Eres mi lugar favorito en el mundo",
+
+            "Quiero cientos de meses más a tu lado, cientos de años si es posible",
+        ];
+
+        // CONTADOR DE TIEMPO
+        function updateCounter() {
+            const startDate = new Date('2026-03-02T00:00:00').getTime();
+            const now = new Date().getTime();
+            const difference = now - startDate;
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+
+        // LLUVIA DE CORAZONES
+        function rainHearts() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('span');
+                    heart.textContent = '💖';
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.fontSize = (Math.random() * 30 + 20) + 'px';
+                    heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    heart.style.animationDelay = Math.random() * 0.5 + 's';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => heart.remove(), 5000);
+                }, i * 100);
+            }
+        }
+
+        // ESCANEAR CORAZÓN
+        function scanHeart() {
+            rainHearts();
+            const randomMessage = randomMessages[Math.floor(Math.random() * randomMessages.length)];
+            document.getElementById('modal-message').textContent = randomMessage;
+            document.getElementById('modal').style.display = 'block';
+            
+            setTimeout(() => {
+                closeModal();
+                window.location.href = 'https://acesse.one/3qzueun';
+            }, 4000);
+        }
+
+        // CERRAR MODAL
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        // SCROLL A SECCIÓN
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // CERRAR MODAL AL HACER CLIC FUERA
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // INICIALIZACIÓN AL CARGAR
+        document.addEventListener('DOMContentLoaded', async () => {
+            initParticles();
+            updateCurrentDate();
+            
+            setTimeout(async () => {
+                await typeText(document.getElementById('typing-text'), consultText, 30);
+            }, 2000);
+
+            setTimeout(async () => {
+                const emotionalText = emotionalPhrases.join('\n');
+                await typeText(document.getElementById('emotional-text'), emotionalText, 40);
+            }, 5000);
+
+            updateCounter();
+            setInterval(updateCounter, 1000);
+        });
+
+        // EFECTO RESPIRABLE EN HOVER DE BOTONES
+        document.querySelectorAll('.btn-start, .btn-action').forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05)';
+            });
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
